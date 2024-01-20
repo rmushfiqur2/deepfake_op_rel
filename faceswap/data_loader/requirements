@@ -1,0 +1,16 @@
+conda create -n faceswap python=3.6.4
+conda install -c conda-forge cudatoolkit=9.0 cudnn=7
+pip install tensorflow==1.8.0
+pip install tensorflow-gpu==1.8.0
+
+python3 -c "import tensorflow as tf; print(tf.test.is_gpu_available())"
+
+https://www.tensorflow.org/install/pip
+https://www.tensorflow.org/install/source
+
+
+pip install keras==2.1.5
+pip install keras_vggface --no-dependencies
+pip install keras_applications
+
+AttributeError: 'str' object has no attribute 'decode' -> pip install 'h5py==2.10.0' --force-reinstall

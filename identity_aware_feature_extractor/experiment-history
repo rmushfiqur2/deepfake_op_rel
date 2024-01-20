@@ -1,0 +1,54 @@
+****************** EXP 1 *************** ****************** ****
+augment_crop_controlled = true for distance training, false for teacher training
+****************** EXP 1 *************** ****************** ****
+teacher + distance (with test data)
+
+deepfake_training_data_generator.py => ../data_deepfake/compact/ (teacher training)
+trained with real and gen (D1,D2)
+deepfake_test_data_generator_swapped.py => ../data_deepfake/compact-test-swapped/ (distance training) (D11,D22) (test)
+trained with real and swapped (test data)
+training => teacher (1500 epochs) + distances (1500 epochs) with margin 50 (square 2500)
+output: finetuned on distances crop controlled
+AUC: 0.77 (0.75 using (D1,D2) instead of (D11,D22))
+
+****************** EXP 2 *************** ****************** ****
+teacher (D1, D2)
+
+deepfake_training_data_generator.py => ../data_deepfake/compact/ (teacher training)
+trained with real and gen
+training => teacher (1500 epochs)
+output: finetuned only with teacher
+AUC: 0.65 (with added teacher training swapped test data incerases to 0.67 only)
+
+****************** EXP 3 *************** ****************** ****
+distance (D1,D2)
+
+deepfake_training_data_generator.py => ../data_deepfake/compact/ (teacher training)
+trained with real and gen
+training => distance (90 epochs)
+output: finetuned only distance
+AUC: 0.58
+
+****************** EXP 4 *************** ****************** ****
+teacher + distance (with test data) (starts from finetuned only with teacher)
+distance (D11,D22) with margin 50
+
+deepfake_test_data_generator_swapped.py => ../data_deepfake/compact-train-swapped/ (teacher training)
+trained with swapped
+training => distance ( epochs)
+output: finetuned only swapped distance
+AUC: 
+
+****************** EXP 5 *************** ****************** ****
+teacher + distance (with test data) (starts from finetuned only with teacher)
+distance (D11,D22) with margin 50
+
+deepfake_test_data_generator_swapped.py => ../data_deepfake/compact-train-swapped/ (teacher training)
+trained with swapped
+training => distance ( epochs)
+output: finetuned only swapped distance
+AUC:
+
+
+
+

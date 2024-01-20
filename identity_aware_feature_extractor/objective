@@ -1,0 +1,38 @@
+test: cacd
+
+D22 swap_folder_path = '../data_deepfake/face-cacd-swapped-2ndhalf'
+D3 swap_gen_folder_path = '../data_deepfake/face-cacd-gan-using5-9-swapped-2ndhalf'
+D1 orig_folder_path = '../data_deepfake/face-cacd'
+D11 orig_folder_path = '../data_deepfake/face-cacd'
+D2 orig_folder_gen = '../data_deepfake/face-cacd-gan-using5-9'
+
+We want dis(D1,D2) to be large, but dis(D22,D3) to be small
+
+D2 is far different from D22
+
+D2 is like Obama -> fake Obama
+D22 is like Mushfiq -> Obama
+D1 Obama
+D11 Mushfiq
+D3 Mushfiq -> Obama -> Obama
+
+One option is D11 -> D22 -> D3 
+Another option is D1 -> D2
+
+In test purpose D2 has no value. Goal is to separate D1 and D22 or to separate (D1,D2) and (D22,D3)
+in inference we were separating (D11,D22)(high) and (D22,D3)(low) with DatasetBaseUnsupervised_deepfake_idempotence
+theoretically (D1,D2) should be low than (D11,D22), so we are not getting actual measure
+
+First I trained to separate (Obama and fake Obama)
+then using swapped data
+Then I trained to separate (Mushfiq and Obama(Mushfiq))
+
+So, D1 can be two types (Mushfiq, Obama) (D1 and D11)
+
+
+Data swapped means mushfiq and Obama(Mushfiq)
+else Obama and Obama(Obama)
+
+We want to increse distnace for both (Obama, fake obama) and (Mushfiq, Obama(Mushfiq))
+
+

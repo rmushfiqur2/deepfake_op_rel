@@ -1,0 +1,7 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/*
+amtc/__pycache__/*
+motion_vector/__pycache__/*
+.idea/*
+formatting
+siamese_detector/required-feature-folder/*
