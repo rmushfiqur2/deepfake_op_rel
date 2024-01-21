@@ -56,7 +56,7 @@ img_folder_gen_gen = "../faces/celebdf_double_recons/"
 from glob import glob
 
 num_done_persons = 0
-for person_id in range(60, 63):  #range(0, 8):
+for person_id in range(0, 62):  #range(0, 8):
     print("person: {}".format(person_id))
 
     for vid_id in range(5):  # range(5):

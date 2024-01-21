@@ -34,12 +34,12 @@ We suggest employing a Siamese network in the detection network which is tailore
 Create a conda environment as below:
 
 ```
-conda create --name double_op python=3.8.15
+conda create --name double_op python=3.8.15 -y
 conda activate double_op
-conda install pytorch torchvision pytorch-cuda=11.8 -c pytorch -c nvidia
-conda install matplotlib
-conda install scipy
-pip install opencv-python efficientnet-pytorch albumentations scikit-learn pandas tqdm tensorboardX h5py
+conda install pytorch torchvision pytorch-cuda=11.8 -c pytorch -c nvidia -y
+conda install matplotlib -y
+conda install scipy -y
+pip install opencv-python efficientnet-pytorch albumentations scikit-learn pandas tqdm tensorboardX h5py pyqt6
 ```
 The dependency is listed in the ```requirements.txt``` file.
 
@@ -50,7 +50,7 @@ tar -xzvf required-final.tar.gz -C ./
 cd siamese_detector
 python proposed_method_test.py
 ```
-Before running the above script, please download ```required-final.tar.gz``` from the <a href="https://ieee-dataport.org/documents/individualized-deepfake-detection-dataset">data repository</a> and keep it inside ```deepfake_double_op/``` folder.
+Before running the above script, please download ```required-final.tar.gz``` from the <a href="https://ieee-dataport.org/documents/individualized-deepfake-detection-dataset">data repository</a> and keep it inside ```deepfake_op_rel/``` folder.
 
 The script uses trained siamese models stored in ```siamese_detector/trained_weight``` folder.
 
@@ -61,14 +61,14 @@ cd siamese_detector
 python proposed_method_train.py
 ```
 
-Before running the above script, please download ```required-final.tar.gz``` from the <a href="https://ieee-dataport.org/documents/individualized-deepfake-detection-dataset">data repository</a> and keep it inside ```deepfake_double_op/``` folder.
+Before running the above script, please download ```required-final.tar.gz``` from the <a href="https://ieee-dataport.org/documents/individualized-deepfake-detection-dataset">data repository</a> and keep it inside ```deepfake_op_rel/``` folder.
 
 #### Generating The Features From Scratch
 
 The authentic and deepfake images are available in the <a href="https://ieee-dataport.org/documents/individualized-deepfake-detection-dataset">data repository</a>. If you want to extract the features of your own please run the below scripts.
 
 ```
-cd deepfake_double_op
+cd deepfake_op_rel
 mkdir faces
 tar -xzvf celebdf.tar.gz -C ./faces/
 tar -xzvf celebdf_recons.tar.gz -C ./faces/
@@ -77,7 +77,8 @@ tar -xzvf cacd_auth.tar.gz -C ./faces/
 tar -xzvf cacd_auth_recons.tar.gz -C ./faces/
 tar -xzvf cacd_deepfake.tar.gz -C ./faces/
 tar -xzvf cacd_deepfake_recons.tar.gz -C ./faces/
-tar -xzvf  finetuned-on-compact-train-swapped.tar.gz -C ./
+unzip finetuned-on-compact-train-swapped.zip
+mkdir regenerated-feature-folder
 cd siamese_detector
 python prepare_features_train_data.py
 python prepare_features_test_data.py
@@ -89,13 +90,13 @@ The identity aware feature extractor can be trained as below.
 
 ```
 tar -xzvf flr_r50_vgg_face.tar.gz -C siamese_detector/models
-cd identity_aware_feature_extractor
-tar -xzvf compact-train-swapped.tar.gz -C ./
 tar -xzvf finetuned-backbone.tar.gz -C ./
+tar -xzvf compact-train-swapped.tar.gz -C ./
+cd identity_aware_feature_extractor
 conda activate double_op
 python main-transfer-learning.py
 ```
-Before running the above script, please download the training data ```compact-train-swapped.tar.gz``` and initial weights ```finetuned-backbone.tar.gz``` and ```flr_r50_vgg_face.tar.gz``` from the data repository.
+Before running the above script, please download the training data ```compact-train-swapped.tar.gz``` and initial weights ```finetuned-backbone.zip``` and ```flr_r50_vgg_face.tar.gz``` from the data repository.
 
 #### Comparing With Tuned Baseline Methods
 
@@ -108,7 +109,7 @@ cd siamese_detector
 python baseline_efficientnet_tuning.py
 python baseline_xception_tuning.py
 ```
-Before running the above script, please download ```feature-efficientnet.tar.gz``` and ```feature-xception.tar.gz``` from the <a href="https://ieee-dataport.org/documents/individualized-deepfake-detection-dataset">data repository</a> and keep it inside ```deepfake_double_op/``` folder.
+Before running the above script, please download ```feature-efficientnet.tar.gz``` and ```feature-xception.tar.gz``` from the <a href="https://ieee-dataport.org/documents/individualized-deepfake-detection-dataset">data repository</a> and keep it inside ```deepfake_op_rel/``` folder.
 
 ## Results
 
@@ -134,7 +135,7 @@ cd faceswap
 python extract_faces.py
 python extract_eyes.py
 ```
-After running the scripts you should find the facial images of new identity within ```deepfake_double_op/faces/faces_celebdf``` folder and eye masks within ```deepfake_double_op/faces/binary_masks-celebdf``` folder. Similarly extracted faces and eye masks from test images will be available within ```deepfake_double_op/faces/faces_cacd``` and ```deepfake_double_op/faces/binary_masks-cacd``` folders.
+After running the scripts you should find the facial images of new identity within ```deepfake_op_rel/faces/faces_celebdf``` folder and eye masks within ```deepfake_op_rel/faces/binary_masks-celebdf``` folder. Similarly extracted faces and eye masks from test images will be available within ```deepfake_op_rel/faces/faces_cacd``` and ```deepfake_op_rel/faces/binary_masks-cacd``` folders.
 
 To train the reconstructor models using only trianing images run the below script after updating the identity numbers in line 85:
 ```python gen_train_celebdf.py```
@@ -144,7 +145,7 @@ If you want to generate faceswapped images from the test images using Faceswap-G
 
 Then generate the reconstructed images, doubly reconstructed images and test faceswapped images run the below script three times for each of the tasks updating the lines from 473 to 498.
 ```python gen_run.py```
-After this step you should have all types of reconstructed images for newly added identities within ```deepfake_double_op/faces/``` folder.
+After this step you should have all types of reconstructed images for newly added identities within ```deepfake_op_rel/faces/``` folder.
 ## Citation
 
 If you use our code, please cite our <a href="https://arxiv.org/abs/2312.08034">paper</a>:
