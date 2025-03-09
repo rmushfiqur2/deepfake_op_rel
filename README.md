@@ -6,7 +6,11 @@ The majority of the victims of the deepfake attacks are the celebrities as shown
 
 ![Alt text](imgs/deepfake_celebrity.png)
 
-Individualized deepfake detection converts the question "Is this image a deepfake?" to "Is this image a deepfake of that celebrity"? The extra information can help the detection system.
+Individualized deepfake detection converts the question "Is this image a deepfake?" to "Is this image a deepfake of that celebrity"? The extra information can help the detection system. To do such detection, we need a deepfake dataset labelled with identity information, as shown below.
+
+![Alt text](imgs/dataset_icon.png)
+
+The reconstructed images are required for the proposed **double neural network** detection method, as explained in the next section.
 
 ### 2. Double Neural Network
 
@@ -23,7 +27,7 @@ If we differentiate the deepfake traces before and after passing it the deepfake
 
 ## Detection Network
 
-We suggest employing a Siamese network in the detection network which is tailored to identify subtle distinctions between the features before and after the extra deepfake operation. We also use an identity-aware feature extractor instead of generalized feature extractor to better utilize the identity information.
+We suggest employing a Siamese network in the detection network, which is tailored to identify subtle distinctions between the features before and after the extra deepfake operation. We also use an identity-aware feature extractor instead of a generalized feature extractor to better utilize the identity information.
 
 ![Alt text](imgs/test-diagram.png)
 
@@ -50,7 +54,7 @@ tar -xzvf required-final.tar.gz -C ./
 cd siamese_detector
 python proposed_method_test.py
 ```
-Before running the above script, please download ```required-final.tar.gz``` from the <a href="https://drive.google.com/drive/folders/1pHgGdZsf9cTgPd2mqrFOGU9HuSwcsOn4?usp=drive_link">data repository</a> and keep it inside ```deepfake_op_rel/``` folder.
+Before running the above script, please download ```required-final.tar.gz``` from the data repository (<a href="https://ieee-dataport.org/documents/individualized-deepfake-detection-dataset">IEEE Dataport</a> or <a href="https://drive.google.com/drive/folders/1pHgGdZsf9cTgPd2mqrFOGU9HuSwcsOn4?usp=drive_link">Google Drive</a>) and keep it inside ```deepfake_op_rel/``` folder.
 
 The script uses trained siamese models stored in ```siamese_detector/trained_weight``` folder.
 
@@ -61,11 +65,11 @@ cd siamese_detector
 python proposed_method_train.py
 ```
 
-Before running the above script, please download ```required-final.tar.gz``` from the <a href="https://drive.google.com/drive/folders/1pHgGdZsf9cTgPd2mqrFOGU9HuSwcsOn4?usp=drive_link">data repository</a> and keep it inside ```deepfake_op_rel/``` folder.
+Before running the above script, please download ```required-final.tar.gz``` from the data repository (<a href="https://ieee-dataport.org/documents/individualized-deepfake-detection-dataset">IEEE Dataport</a> or <a href="https://drive.google.com/drive/folders/1pHgGdZsf9cTgPd2mqrFOGU9HuSwcsOn4?usp=drive_link">Google Drive</a>) and keep it inside ```deepfake_op_rel/``` folder.
 
 #### Generating The Features From Scratch
 
-The authentic and deepfake images are available in the <a href="https://drive.google.com/drive/folders/1pHgGdZsf9cTgPd2mqrFOGU9HuSwcsOn4?usp=drive_link">data repository</a>. If you want to extract the features of your own please run the below scripts.
+The authentic and deepfake images are available in the data repository (<a href="https://ieee-dataport.org/documents/individualized-deepfake-detection-dataset">IEEE Dataport</a> or <a href="https://drive.google.com/drive/folders/1pHgGdZsf9cTgPd2mqrFOGU9HuSwcsOn4?usp=drive_link">Google Drive</a>). If you want to extract the features of your own please run the below scripts.
 
 ```
 cd deepfake_op_rel
@@ -109,7 +113,7 @@ cd siamese_detector
 python baseline_efficientnet_tuning.py
 python baseline_xception_tuning.py
 ```
-Before running the above script, please download ```feature-efficientnet.tar.gz``` and ```feature-xception.tar.gz``` from the <a href="https://drive.google.com/drive/folders/1pHgGdZsf9cTgPd2mqrFOGU9HuSwcsOn4?usp=drive_link">data repository</a> and keep it inside ```deepfake_op_rel/``` folder.
+Before running the above script, please download ```feature-efficientnet.tar.gz``` and ```feature-xception.tar.gz``` from the data repository (<a href="https://ieee-dataport.org/documents/individualized-deepfake-detection-dataset">IEEE Dataport</a> or <a href="https://drive.google.com/drive/folders/1pHgGdZsf9cTgPd2mqrFOGU9HuSwcsOn4?usp=drive_link">Google Drive</a>) and keep it inside ```deepfake_op_rel/``` folder.
 
 ## Results
 
